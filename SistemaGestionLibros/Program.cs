@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 //agregar los servicios
 builder.Services.AddDbContext<ContextLibros>(option =>
 {
-    option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    option.UseNpgsql(builder.Configuration.GetConnectionString("ConexionDatabase"));
 });
 
 //agregar la interfaz
