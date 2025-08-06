@@ -41,4 +41,7 @@ Desarrollo de Web APIs en .NET
 
 Consumo de endpoints desde el frontend sin frameworks
 
-Validaciones, manejo de estados y comunicación entre capas
+Validaciones, manejo de estados y comunicación entre capas.
+
+
+-Brunelli Jazmin-
