@@ -1,47 +1,59 @@
-📚 Gestión de Libros – Proyecto Fullstack
+# 📚 Gestión de Libros – Proyecto Fullstack
 
-Este proyecto es una aplicación simple de gestión de libros desarrollada como parte de un trabajo práctico académico. Está dividido en dos partes: un backend en ASP.NET Core con Entity Framework y PostgreSQL, y un frontend en HTML con Bootstrap y JavaScript puro.
+Aplicación simple de gestión de libros desarrollada como trabajo práctico académico. El sistema está dividido en dos partes: un backend en ASP.NET Core con Entity Framework y PostgreSQL, y un frontend en HTML con Bootstrap y JavaScript puro.
 
-🛠 Tecnologías utilizadas
-Backend: ASP.NET Core 8, Entity Framework Core (Code First), PostgreSQL (Docker)
+---
 
-Frontend: HTML, CSS (Bootstrap 5), JavaScript (vanilla)
+## 🛠 Tecnologías utilizadas
 
-Herramientas: Rider / Visual Studio, Postman, Docker Desktop
+### 🔙 Backend
+- ASP.NET Core 8  
+- Entity Framework Core (Code First)  
+- PostgreSQL (contenedor Docker)
 
-🔄 Funcionalidades principales
-Obtener el primer libro registrado en la base de datos (GET /api/libro/primero)
+### 🌐 Frontend
+- HTML  
+- CSS (Bootstrap 5)  
+- JavaScript (vanilla)
 
-Editar datos de un libro (PUT /api/libro/{id})
+### 🧰 Herramientas
+- Rider / Visual Studio  
+- Postman  
+- Docker Desktop  
 
-Validación de campos requeridos desde el frontend
+---
 
-Alerta visual según éxito o error al guardar
+## 🔄 Funcionalidades principales
 
-Interfaz responsive y clara con Bootstrap
+- 📖 Obtener el primer libro registrado en la base de datos  
+  `GET /api/libro/primero`
 
-🧪 Validaciones
-Campos obligatorios en el formulario
+- ✏️ Editar datos de un libro  
+  `PUT /api/libro/{id}`
 
-Feedback visual con Bootstrap Alerts (alert-success / alert-danger)
+- ✅ Validación de campos requeridos desde el frontend
 
-Botón deshabilitado mientras se espera la respuesta del servidor
+- ⚠️ Alerta visual según éxito o error al guardar
 
-🗃 Base de datos
-Se modelaron correctamente las relaciones 1:N entre libros, autores y categorías.
+- 📱 Interfaz responsive y clara utilizando Bootstrap
 
-Migraciones aplicadas con Entity Framework Core.
+---
 
-PostgreSQL corriendo en Docker.
+## 🧪 Validaciones implementadas
 
-🎯 Objetivo académico
-El objetivo del proyecto fue integrar conocimientos de:
+- Campos obligatorios en el formulario  
+- Feedback visual usando `alert-success` y `alert-danger` de Bootstrap  
+- Botón de envío deshabilitado mientras se espera la respuesta del servidor  
 
-Desarrollo de Web APIs en .NET
+---
 
-Consumo de endpoints desde el frontend sin frameworks
+## 🗃 Base de datos
 
-Validaciones, manejo de estados y comunicación entre capas.
+- Relaciones 1:N correctamente modeladas entre libros, autores y categorías  
+- Migraciones generadas y aplicadas con Entity Framework Core  
+- Base de datos PostgreSQL ejecutándose dentro de Docker  
 
+---
 
--Brunelli Jazmin-
+**Brunelli Jazmin**  
+
