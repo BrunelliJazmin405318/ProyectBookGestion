@@ -1,4 +1,5 @@
 📚 Gestión de Libros – Proyecto Fullstack
+
 Este proyecto es una aplicación simple de gestión de libros desarrollada como parte de un trabajo práctico académico. Está dividido en dos partes: un backend en ASP.NET Core con Entity Framework y PostgreSQL, y un frontend en HTML con Bootstrap y JavaScript puro.
 
 🛠 Tecnologías utilizadas
