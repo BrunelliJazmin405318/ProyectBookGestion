@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container mt-4" style="max-width: 600px;">
+        <h1 class="text-center mb-3">Editar el primer libro: </h1>
+
+        <div id="mensaje"></div>
+
+        <form id="formLibro" style="display:none;">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Titulo *</label>
+                <input type="text" id="titulo" class="form-control" maxlength="100" required />
+            </div>
+            <div class="mb-3">
+                <label for="isbn" class="form-label">ISBN *</label>
+                <input type="text" id="isbn" class="form-control" maxlength="20" required />
+            </div>
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha de Publicacion *</label>
+                <input type="text" id="fecha" class="form-control" placeholder="dd-MM-yyyy" required />
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" id="disponible" class="form-check-input" />
+                <label for="disponible" class="form-check-label">Disponible</label>
+            </div>
+            <div class="mb-3">
+                <label for="autor" class="form-label">Autor</label>
+                <input type="text" id="autor" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoria</label>
+                <input type="text" id="categoria" class="form-control" readonly />
+            </div>
+            <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar cambios</button>
+        </form>
+    </div>
+
+    <script>
+        let libroId = null;
+
+        function mostrarMensaje(texto, esError = false) {
+            const div = document.getElementById('mensaje');
+            div.textContent = texto;
+            div.style.color = esError ? 'red' : 'green';
+            setTimeout(() => { div.textContent = ''; }, 4000);
+        }
+
+        window.onload = function () {
+            fetch('/api/libro/primero')
+                .then(res => {
+                    if (!res.ok) throw new Error('No hay libros dados de alta');
+                    return res.json();
+                })
+                .then(resultado => {
+                    if (!resultado.ok) throw new Error(resultado.mensajeError || 'No hay libros dados de alta');
+                    const libro = resultado.datos;
+                    libroId = libro.id;
+                    document.getElementById('titulo').value = libro.titulo || '';
+                    document.getElementById('isbn').value = libro.isbn || '';
+                    // Fecha dd-MM-yyyy
+                    const fecha = new Date(libro.fechaPublicacion);
+                    const dia = ('0' + fecha.getDate()).slice(-2);
+                    const mes = ('0' + (fecha.getMonth() + 1)).slice(-2);
+                    const anio = fecha.getFullYear();
+                    document.getElementById('fecha').value = `${dia}-${mes}-${anio}`;
+                    document.getElementById('disponible').checked = libro.disponible || false;
+                    document.getElementById('autor').value = libro.autor?.nombreCompleto || '';
+                    document.getElementById('categoria').value = libro.categoria?.nombre || '';
+
+                    document.getElementById('formLibro').style.display = 'block';
+                })
+                .catch(error => {
+                    mostrarMensaje(error.message, true);
+                });
+        };
+
+        document.getElementById('formLibro').onsubmit = function (e) {
+            e.preventDefault();
+            const titulo = document.getElementById('titulo').value.trim();
+            const isbn = document.getElementById('isbn').value.trim();
+            const fecha = document.getElementById('fecha').value.trim();
+            const disponible = document.getElementById('disponible').checked;
+
+            if (!titulo || !isbn || !fecha) {
+                mostrarMensaje('completa todos los campos.', true);
+                return;
+            }
+
+            if (!/^\d{2}-\d{2}-\d{4}$/.test(fecha)) {
+                mostrarMensaje('Usa formato dd-MM-yyyy.', true);
+                return;
+            }
+
+            const partes = fecha.split('-');
+            const fechaISO = `${partes[2]}-${partes[1]}-${partes[0]}`;
+
+            const btnGuardar = document.getElementById('btnGuardar');
+            btnGuardar.disabled = true;
+
+            fetch(`/api/libro/${libroId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    titulo: titulo,
+                    isbn: isbn,
+                    fechaPublicacion: fechaISO,
+                    disponible: disponible
+                })
+            })
+                .then(res => res.json())
+                .then(resultado => {
+                    if (resultado.ok) {
+                        mostrarMensaje('Cambios hechos');
+                    } else {
+                        mostrarMensaje(resultado.mensajeError || 'Error', true);
+                    }
+                })
+                .catch(() => mostrarMensaje('Error', true))
+                .finally(() => {
+                    btnGuardar.disabled = false;
+                });
+        };
+    </script>
+</body>
+
+</html>
