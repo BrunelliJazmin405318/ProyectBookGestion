@@ -56,4 +56,4 @@ Aplicación simple de gestión de libros desarrollada como trabajo práctico aca
 ---
 
 **Brunelli Jazmin**  
--Para su funcionamiento es necesario crear un contenedor postgreSQL.
+-Para su funcionamiento es necesario crear un contenedor postgreSQL y realizar las migraciones correspondientes.
